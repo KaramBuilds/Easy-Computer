@@ -7,9 +7,12 @@ import pyautogui
 from pycaw.pycaw import AudioUtilities
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
+import os
+
+model_path = os.path.join(os.path.dirname(__file__), "hand_landmarker.task")
+base_options = python.BaseOptions(model_asset_path=model_path)
 
 cap = cv2.VideoCapture(0)
-base_options = python.BaseOptions(model_asset_path=r"d:\Dev\Easy Computer\hand_landmarker.task")
 options = vision.HandLandmarkerOptions(base_options=base_options, num_hands=1)
 detector = vision.HandLandmarker.create_from_options(options)
 
@@ -54,10 +57,6 @@ while True:
                 pyautogui.hotkey('shift', 'p')
                 last_action = time.time()
                 print("Previous Video")
-            elif index_up and middle_up and ring_up and pinky_up:
-                pyautogui.hotkey('win', 'printscreen')
-                last_action = time.time()
-                print("Screenshot Taken")
 
     cv2.imshow("Gesture Controlled Frame", frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
